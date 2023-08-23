@@ -1,0 +1,298 @@
+///////// ADMIN FILTER STYLES ///////////
+.adminfilter {
+  display: flex;
+  column-gap: 2.4rem;
+  width: 100%;
+  @media (max-width: 58.9em) {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+  button {
+    background: #8a8a8a;
+    padding: 1.3rem 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 1.9rem;
+    color: #ffffff;
+    font-size: 16px;
+    width: max-content;
+  }
+}
+
+.search {
+  position: relative;
+
+  input {
+    width: 34rem;
+    height: 48px;
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
+    outline: none;
+    border: 0.8px solid #545454;
+    border-radius: 4px;
+    background-color: transparent;
+
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #545454;
+    padding-left: 5rem;
+  }
+
+  .image {
+    width: 10rem;
+    position: absolute;
+    left: 1.7rem;
+    top: 1.2rem;
+
+    @media (max-width: 58.9em) {
+      top: 1.5rem;
+    }
+
+    @media (max-width: 30.9em) {
+      top: 2rem;
+      left: 1rem;
+    }
+
+    img {
+      //   width: 100%;
+    }
+  }
+}
+
+////////// SEND EMAIL MODAL STYLES /////////////
+.sendemail {
+  width: 45.8rem;
+  background-color: var(--color-white);
+  padding: 3.2rem;
+
+  h2 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333333;
+    margin-bottom: 2.4rem;
+  }
+
+  .form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.4rem;
+    row-gap: 1.6rem;
+
+    label {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+    }
+
+    textarea {
+      border: 0.8px solid #333333;
+      border-radius: 4px;
+      outline: none;
+      height: 108px;
+      padding: 1.6rem;
+    }
+  }
+  .subject > input {
+    border: 0.8px solid #333333;
+    border-radius: 4px;
+    outline: none;
+    padding: 1.6rem;
+    font-size: 14px;
+  }
+}
+
+.email {
+  margin-bottom: 2.4rem;
+  h3 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #333333;
+    margin-bottom: 1.2rem;
+  }
+  p,
+  input {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    color: #333333;
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+}
+
+////////// DELETE USER MODAL STYLES /////////////
+.delete {
+  width: 32.3rem;
+  background-color: var(--color-white);
+  padding: 3.2rem;
+
+  img {
+    margin-bottom: 3.2rem;
+  }
+  .text {
+    margin-bottom: 3.2rem;
+    h2 {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 36px;
+      color: #333333;
+      margin-bottom: 1.6rem;
+    }
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #545454;
+    }
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      border-radius: 4px;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 0.8rem 0;
+      width: 12rem;
+    }
+    button:first-child {
+      background-color: transparent;
+      letter-spacing: 0.005em;
+      color: #333333;
+      border: 1px solid #000000;
+      border-radius: 4px;
+    }
+    button:last-child {
+      background-color: #ff2c2c;
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: 1.9rem;
+      border: none;
+    }
+  }
+}
+
+///// ADD NEW STYLES //////
+.addnew {
+  .addnewbtn {
+    button {
+      width: 23.3rem;
+      background: var(--color-primary);
+      display: flex;
+      padding: 2.2rem 2.5rem;
+      align-items: center;
+      justify-content: space-between;
+      border: none;
+      box-shadow: 0px 1px 3px rgba(91, 54, 15, 0.25),
+        0px 2px 6px 2px rgba(91, 54, 15, 0.15);
+      border-radius: 5px;
+
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}
+
+///// ADD NEW LIST STYLE ///////
+.addnewlist {
+  padding: 1.6rem;
+  background-color: #ffffff;
+  width: 233px;
+  display: grid;
+  row-gap: 2.4rem;
+
+  &__item {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #333333;
+  }
+}
+
+.investor {
+  background-color: #ffffff;
+  padding: 1.6rem;
+
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    margin-bottom: 24px;
+  }
+
+  form {
+    display: grid;
+    row-gap: 1.6rem;
+  }
+  .form_group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+
+    input {
+      border: 0.8px solid #333333;
+      border-radius: 4px;
+      outline: none;
+      padding: 0.8rem 1.6rem;
+
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.0015em;
+      color: #000000;
+    }
+  }
+}
+
+/////// VIEW USERS //////////
+.viewuser {
+  width: 50.8rem;
+  background-color: var(--color-white);
+  padding: 3.2rem;
+
+  &__userdetails {
+    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 1rem;
+    p {
+      font-size: 12px;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}

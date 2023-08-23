@@ -1,0 +1,411 @@
+.button {
+  background-color: var(--color-primary);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 1.4rem 0;
+
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: var(--font-p-text-body);
+  line-height: 24px;
+  cursor: pointer;
+}
+
+// Onboarding Nav Styles
+.onboardingnav {
+  display: flex;
+  column-gap: 52rem;
+  padding: 3rem 2.4rem 0;
+  align-items: center;
+  position: absolute;
+
+  @media (max-width: 62.25em) {
+    justify-content: space-between;
+    column-gap: 0rem;
+    width: 100%;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    column-gap: 0.8rem;
+
+    p {
+      font-weight: 700;
+      font-size: clamp(16px, 3vw, 20px);
+      line-height: 28px;
+      letter-spacing: 0.0015em;
+    }
+  }
+
+  .desktop_nav {
+    @media (max-width: 62.25em) {
+      display: none;
+    }
+  }
+
+  .hamburger,
+  .mobile_nav {
+    @media (min-width: 62.25em) {
+      display: none;
+    }
+  }
+
+  .mobile_nav {
+    position: absolute;
+    background-color: var(--color-primary);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    padding: 20px 2rem 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .mobile_nav > ul {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 24px;
+    row-gap: 3rem;
+  }
+
+  nav > ul {
+    display: flex;
+    list-style-type: none;
+    column-gap: 1.6rem;
+    font-size: var(--font-p-text-body);
+    line-height: 24px;
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+  }
+}
+
+.onboardingwrapper {
+  .main_content {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100vh;
+
+    @media (max-width: 62.25em) {
+      grid-template-columns: 100%;
+    }
+  }
+
+  .content_form {
+    margin: 0 auto;
+  }
+  .content_image {
+    display: flex;
+    align-items: flex-end;
+    background-size: contain;
+    background: linear-gradient(
+        180deg,
+        #f9faed 11.93%,
+        rgba(255, 255, 255, 0) 58.29%
+      ),
+      url('/farmer.png');
+    background-position: 50% 30%;
+
+    @media (max-width: 62.25em) {
+      display: none;
+    }
+    .textbox {
+      width: 41.1rem;
+      margin: 0 auto 106px;
+      border: 2px solid #ffffff;
+      background: #e3cfb8;
+      backdrop-filter: blur(144.5px);
+      display: flex;
+      opacity: 0.8;
+      justify-content: center;
+      border-radius: 4px;
+      padding: 3.1rem 2rem;
+
+      p {
+        font-weight: 600;
+        font-size: 2.4rem;
+        line-height: 24px;
+        letter-spacing: 0.0015em;
+      }
+    }
+  }
+}
+
+///////////////////////// FORM ///////////////////////////
+.signup {
+  width: 39.4rem;
+  // padding: 0 12.9rem 0;
+
+  @media (max-width: 35.25em) {
+    width: 100%;
+    padding: 0 1.6rem;
+  }
+
+  a {
+    color: var(--color-link);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+  }
+  h1 {
+    margin-top: 10.4rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 44px;
+    letter-spacing: 0.0025em;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+  }
+
+  .form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    row-gap: 8px;
+
+    label {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.0015em;
+    }
+
+    input {
+      padding: 1.12rem 1.6rem;
+      border: 0.8px solid #333333;
+      border-radius: 4px;
+      outline: none;
+      width: 100%;
+
+      //INPUT TEXT
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.005em;
+      color: #333333;
+    }
+    ::-webkit-input-placeholder {
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.005em;
+      color: #8a8a8a;
+    }
+
+    ::placeholder {
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.005em;
+      color: #8a8a8a;
+    }
+
+    .password_group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .password_strength {
+      display: flex;
+      align-items: center;
+      column-gap: 0.8rem;
+
+      p {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.0025em;
+      }
+    }
+
+    .strength_indicate {
+      display: flex;
+
+      p {
+        font-size: 15px;
+      }
+    }
+
+    .weak {
+      color: var(--color-error);
+    }
+    .medium {
+      color: var(--color-secondary);
+    }
+    .strong {
+      color: var(--color-success);
+    }
+  }
+
+  .passgroup {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  .showpass {
+    position: absolute;
+    right: 15px;
+  }
+
+  .forgot {
+    text-align: end;
+    margin-bottom: 16px;
+  }
+
+  .btn {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    .loader {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+
+      @media (max-width: 36.25em) {
+        top: 5px;
+      }
+      @media (max-width: 20.25em) {
+        top: 5px;
+        right: 20px;
+      }
+    }
+  }
+
+  .footer {
+    padding-bottom: 69px;
+  }
+}
+
+/////////////////PASSWORD REQUISITE STYLE////////////////////
+
+.valid,
+.invalid {
+  font-size: 2rem !important;
+}
+.valid {
+  color: var(--color-success);
+}
+
+.invalid {
+  color: var(--color-error);
+}
+
+.pass_req {
+  display: flex;
+  align-items: center;
+  column-gap: 0.8rem;
+
+  :last-child {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height, or 133% */
+
+    letter-spacing: 0.001em;
+
+    /* Foundation /Black/black-300 */
+
+    color: #545454;
+    margin-top: 3px;
+  }
+}
+
+////////////////////FORGOT PASSWORD/////////////////////////////
+
+.forgot {
+  // position: relative;
+}
+
+.backdrop {
+  background-color: #33333362;
+  position: absolute;
+  height: 100vh;
+  right: 0;
+  width: 100vw;
+  z-index: 100;
+  display: flex;
+}
+
+.modal {
+  position: absolute;
+  z-index: 10000;
+  width: 46.7%;
+  right: 30vw;
+  top: 15vh;
+  background: #ffffff;
+
+  @media (max-width: 56.25em) {
+    right: 20vw;
+    width: 60.7%;
+  }
+
+  @media (max-width: 36.25em) {
+    right: 10vw;
+    width: 80.7%;
+  }
+}
+
+///////////////FORGOT PASSWORD MPDAL//////////////////////
+.forgetModal {
+  padding: 4rem 0;
+  width: 24.7rem;
+  margin: auto;
+  text-align: center;
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.9rem;
+
+    // font
+    /* Heading/Headding 5 */
+    font-weight: 700;
+    font-size: clamp(16px, 3vw, 24px);
+    line-height: 36px;
+    color: #333333;
+  }
+
+  p,
+  span,
+  a {
+    font-size: clamp(12px, 3vw, 16px);
+    line-height: 24px;
+    letter-spacing: 0.005em;
+  }
+
+  p,
+  span {
+    color: #545454;
+    margin-bottom: 3.2rem;
+  }
+
+  a {
+    color: var(--color-link);
+  }
+
+  .btn {
+    width: 15.1rem;
+    margin: auto;
+    margin-bottom: 1.6rem;
+  }
+}

@@ -1,0 +1,31 @@
+.faq {
+  border: 2px solid #e3cfb8;
+  border-radius: 4px;
+  padding: 2.4rem;
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+
+    .h2 {
+      font-weight: 700;
+      font-size: clamp(20px, 3vw, 24px);
+      line-height: 36px;
+      color: #333333;
+      margin-bottom: 0;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #545454;
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+}

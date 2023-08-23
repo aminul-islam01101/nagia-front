@@ -1,0 +1,257 @@
+.profileinfo {
+  max-width: 39.4rem;
+
+  @media (max-width: 58.9em) {
+    max-width: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  row-gap: 8px;
+
+  label {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+  }
+
+  input {
+    padding: 1.12rem 1.6rem;
+    border: 0.8px solid #333333;
+    border-radius: 4px;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+
+    //INPUT TEXT
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+    color: #333333;
+  }
+  ::-webkit-input-placeholder {
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+    color: #8a8a8a;
+  }
+
+  ::placeholder {
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+    color: #8a8a8a;
+  }
+
+  .password_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.passgroup {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.showpass {
+  position: absolute;
+  right: 15px;
+}
+
+.password_strength {
+  display: flex;
+  align-items: center;
+  column-gap: 0.8rem;
+
+  p {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.0025em;
+  }
+}
+
+.strength_indicate {
+  display: flex;
+
+  p {
+    font-size: 15px;
+  }
+}
+
+.weak {
+  color: var(--color-error);
+}
+.medium {
+  color: var(--color-secondary);
+}
+.strong {
+  color: var(--color-success);
+}
+
+.btn {
+  margin-top: 4rem;
+  // display: flex;
+  column-gap: 2.4rem;
+}
+
+////////////PAYMENT DETAILS /////////////
+.paymentdetailscard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__name {
+    display: flex;
+    column-gap: 1.6rem;
+    align-items: center;
+
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+    }
+  }
+
+  &__image {
+    background: var(--color-white);
+    box-shadow: 0px 1px 3px 1px rgba(91, 54, 15, 0.1),
+      0px 1px 2px rgba(91, 54, 15, 0.2);
+    border-radius: 8px;
+    padding: 0.8rem;
+  }
+
+  &__delete {
+    display: flex;
+    column-gap: 1.1rem;
+    align-items: center;
+
+    p {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.0015em;
+      color: #6b1212;
+    }
+  }
+}
+
+//////////////PASSWORD SETTINGS STYLES/////////////////
+.otpgroup {
+  display: flex;
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background: var(--color-secondary);
+    border-radius: 4px;
+    border: none;
+    padding: 1.2rem 2.7rem;
+    cursor: pointer;
+
+    // button text
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+  }
+}
+
+//////// ADD ACCOUNT MODAL ///////////
+
+.addacount {
+  padding: 3.2rem;
+  background-color: var(--color-white);
+  width: 45.8rem;
+
+  h2 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333333;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #333333;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #545454;
+    max-width: 396px;
+  }
+
+  &__description {
+    margin-top: 40px;
+    margin-bottom: 24px;
+
+    .details,
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product {
+      column-gap: 2.4rem;
+    }
+  }
+}
+
+.form_group > label,
+.insurance > label,
+.form_group > input {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: #333333;
+}
+
+.form_group {
+  display: grid;
+  row-gap: 16px;
+  margin-bottom: 24px;
+
+  input,
+  select {
+    border: 0.8px solid #333333;
+    border-radius: 4px;
+    padding: 1.2rem 1.6rem;
+    outline: none;
+  }
+}
+
+.insurance {
+  display: flex;
+  align-items: center;
+  column-gap: 1.6rem;
+  margin-bottom: 32px;
+}

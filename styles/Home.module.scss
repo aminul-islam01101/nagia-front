@@ -1,0 +1,290 @@
+.home {
+  margin-bottom: 10rem;
+}
+
+.btns {
+  display: flex;
+  column-gap: 2.4rem;
+
+  button {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn1 {
+    padding: 1.4rem 3.6rem;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .btn2 {
+    border: none;
+    padding: 1.6rem 3.6rem;
+    background: var(--color-primary);
+    box-shadow: 0px 1px 3px rgba(91, 54, 15, 0.25),
+      0px 2px 6px 2px rgba(91, 54, 15, 0.15);
+    color: var(--color-white);
+  }
+}
+
+.hero {
+  // background: linear-gradient(
+  //     90deg,
+  //     #f0e2c4 22.06%,
+  //     rgba(246, 239, 232, 0) 92.63%
+  //   ),
+  //   url("/homeHero.png");
+  border-radius: 4px;
+
+  &__content {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(25px, 3vw, 56px);
+    line-height: 78px;
+    letter-spacing: -0.005em;
+    color: #462a0b;
+    width: 75.7rem;
+    margin-bottom: 3.2rem;
+
+    @media (max-width: 45.25em) {
+      width: 100%;
+      line-height: 40px;
+    }
+  }
+
+  p {
+    margin-bottom: 4.8rem;
+    font-size: clamp(14px, 3vw, 16px);
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    width: 59.2rem;
+
+    @media (max-width: 45.25em) {
+      width: 100%;
+      // line-height: 40px;
+    }
+  }
+}
+
+.partners {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  h2 {
+  }
+}
+
+.story {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 11.8rem;
+
+  @media (max-width: 58.25em) {
+    grid-template-columns: auto;
+    row-gap: 2rem;
+  }
+
+  &__image {
+    @media (max-width: 58.25em) {
+      display: none;
+    }
+    img {
+    }
+  }
+
+  &__content {
+    margin-bottom: 8rem;
+    h2 {
+      margin-bottom: 2.4rem;
+    }
+    p {
+      margin-bottom: 3.2rem;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+
+      br {
+        margin-top: 20px; /* change this to whatever height you want it */
+      }
+    }
+  }
+}
+
+.how {
+  margin-bottom: 8rem;
+  margin-top: 8rem;
+
+  h2 {
+    margin-bottom: 3.2rem;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 44px;
+    letter-spacing: 0.0025em;
+
+    @media (max-width: 65em) {
+      text-align: center;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #000000;
+    margin-bottom: 38px;
+  }
+  &__media {
+    display: grid;
+    // grid-template-columns: 50% 50%;
+    grid-template-columns: 47% 47%;
+    // column-gap: 5.2rem;
+    justify-content: space-between;
+
+    @media (max-width: 65em) {
+      grid-template-columns: auto;
+      row-gap: 2rem;
+      justify-content: center;
+    }
+  }
+
+  &__images {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2.4rem 2.7rem;
+
+    @media (max-width: 65em) {
+      justify-content: center;
+    }
+  }
+
+  &__image {
+    width: 25.2rem;
+    height: 25.2rem;
+    background-color: #f6efe8;
+    border-radius: 4px;
+  }
+
+  &__video {
+    width: 52.5rem;
+    height: 52.8rem;
+    background-color: #f6efe8;
+    border-radius: 4px;
+  }
+}
+
+.why {
+  margin-bottom: 8rem;
+
+  h2 {
+    margin-bottom: 3.2rem;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 44px;
+    letter-spacing: 0.0025em;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 11.5rem;
+
+    @media (max-width: 58.25em) {
+      grid-template-columns: auto;
+      row-gap: 2rem;
+    }
+  }
+
+  &__image {
+    width: 43.8rem;
+    height: 31.9rem;
+    background-color: #f6efe8;
+    border-radius: 4px;
+  }
+
+  &__text {
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+      &:first-of-type {
+        margin-bottom: 3rem;
+      }
+    }
+  }
+}
+
+.what {
+  h2 {
+    margin-bottom: 3.2rem;
+  }
+
+  .btns {
+    margin-top: 3.2rem;
+
+    .btn1 {
+      color: #333333;
+    }
+  }
+}
+
+.whyinvest {
+  h2 {
+    margin-bottom: 32px;
+  }
+  &__list {
+    background: #764613;
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    justify-content: space-between;
+    column-gap: 2.6rem;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+
+    @media (max-width: 58.25em) {
+      grid-template-columns: repeat(2, auto);
+      row-gap: 2rem;
+    }
+
+    @media (max-width: 30.25em) {
+      grid-template-columns: auto;
+      row-gap: 2rem;
+    }
+  }
+
+  &__item {
+    background: #f6efe8;
+    border-radius: 4px;
+    padding: 2.4rem;
+
+    h3 {
+      margin-top: 32px;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 28px;
+
+      letter-spacing: 0.0015em;
+
+      color: #000000;
+    }
+
+    p {
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #000000;
+    }
+  }
+}

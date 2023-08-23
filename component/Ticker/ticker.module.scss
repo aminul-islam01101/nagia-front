@@ -1,0 +1,51 @@
+.ticker {
+  display: flex;
+  //   column-gap: 4.8rem;
+  //   border-bottom: 0.5px solid #333333;
+  .heading {
+    background-color: var(--color-secondary);
+    min-width: 19.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 28px;
+      letter-spacing: 0.0015em;
+    }
+  }
+
+  .products,
+  .product {
+    display: flex;
+    align-self: center;
+  }
+  .products {
+    padding: 1.6rem 2.4rem;
+    overflow: hidden;
+    column-gap: 2.7rem;
+  }
+
+  marquee {
+    border-bottom: 0.5px solid #333333;
+    display: flex;
+  }
+  .product {
+    column-gap: 1.6rem;
+    h3 {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      letter-spacing: 0.005em;
+    }
+
+    p {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+    }
+  }
+}

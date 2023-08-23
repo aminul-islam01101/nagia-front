@@ -1,0 +1,49 @@
+.products {
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+
+  @media (max-width: 35.25em) {
+    padding-top: 2rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.recent,
+.popular {
+  &__heading {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 44px;
+      letter-spacing: 0.0025em;
+      color: #333333;
+    }
+
+    p {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+    }
+  }
+
+  &__product {
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 2.4rem;
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+    }
+  }
+}
+
+.recent {
+  margin-bottom: 8rem;
+}

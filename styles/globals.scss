@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+:root {
+  /* Colors */
+  --color-primary: #a6631b;
+  --color-secondary: #ffc72c;
+  --color-error: #ff2c2c;
+  --color-success: #00b400;
+  --color-warning: #fbff38;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-link: #2461ff;
+
+  /*Fonts */
+  --font-face: 'mulish', sans-serif;
+  --font-header-1: clamp(20px, 3vw, 44px);
+  --font-header-2: clamp(34px, 3vw, 34px);
+  --font-header-3: clamp(16px, 5vw, 26px);
+  --font-header-4: clamp(1.8rem, 5vw, 20px);
+  --font-p-text-body: clamp(1.6rem, 4.5vw, 16px);
+  --font-p-text-small: clamp(1.4rem, 3vw, 12px);
+  --font-p-text-tag: clamp(1.2rem, 10px, 3vw);
+
+  // Shadows
+  --dp-elevation-1: 0px 1px 3px 1px rgba(91, 54, 15, 0.1),
+    0px 1px 2px rgba(91, 54, 15, 0.2);
+  --dp-elevation-2: 0px 1px 3px rgba(91, 54, 15, 0.25),
+    0px 2px 6px 2px rgba(91, 54, 15, 0.15);
+  --dp-elevation-4: 0px 1px 3px rgba(91, 54, 15, 0.25),
+    0px 6px 8px 3px rgba(91, 54, 15, 0.15);
+  --dp-elevation-6: 0px 2px 3px rgba(91, 54, 15, 0.25),
+    0px 6px 10px 4px rgba(91, 54, 15, 0.15);
+  --dp-elevation-8: 0px 2px 3px rgba(91, 54, 15, 0.25),
+    0px 8px 12px 6px rgba(91, 54, 15, 0.15);
+  //Width
+  --max-width: 1040px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  // outline: 1px red solid;
+}
+
+html,
+body {
+  font-family: var(--font-face);
+}
+
+html {
+  font-size: 62.5%;
+  color: var(--text-color-1);
+
+  @media (max-width: 75em) {
+    font-size: 56.25%;
+  }
+
+  @media (max-width: 56.25em) {
+    font-size: 50%;
+  }
+
+  @media (max-width: 35.25em) {
+    font-size: 45%;
+  }
+
+  @media (max-width: 26.43em) {
+    font-size: 36.25%;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: var(--font-header-1);
+}
+
+h2 {
+  font-size: var(--font-header-2);
+}
+
+h3 {
+  font-size: var(--font-header-3);
+}
+
+h4 {
+  font-size: var(--font-header-4);
+}
+
+p,
+::placeholder,
+button,
+.btn,
+input {
+  font-size: var(--font-p-text-1);
+  font-family: 'Mulish';
+}
+
+br {
+  display: block; /* makes it have a width */
+  content: ''; /* clears default height */
+}
+
+.container {
+  padding: 0rem 2.4rem 0rem;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.popup-overlay {
+  background-color: #2f322f25;
+}
+
+.loader_wrap {
+  position: relative;
+}
+.loader {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+////// PAGINATION STYLE ///////
+
+.pagination {
+  display: flex;
+  padding: 2.2rem 2.3rem;
+  background-color: #fff;
+  width: max-content;
+  margin: 2.4rem auto;
+  column-gap: 2rem;
+  list-style-type: none;
+}
+
+.page_link {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  color: #333333;
+  cursor: pointer;
+}
+
+.active {
+  border-radius: 2px;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: #b88249;
+    width: 2rem;
+    height: 0.2rem;
+    bottom: 0;
+    left: -4px;
+  }
+}
+
+.page_link_next,
+.page_link_prev {
+  color: #764613;
+}

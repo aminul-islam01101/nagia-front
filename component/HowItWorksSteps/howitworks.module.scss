@@ -1,0 +1,81 @@
+.howitworkssteps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 10rem;
+  row-gap: 10rem;
+  margin-top: 10rem;
+
+  @media (max-width: 42em) {
+    flex-direction: column;
+  }
+}
+
+.steps {
+  flex: 0 0 calc(25.66% - 0px);
+  display: grid;
+  justify-content: center;
+  &__image {
+    margin: auto;
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+    column-gap: 1.6rem;
+    justify-content: center;
+
+    p {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 0.0015em;
+      margin-bottom: 0;
+    }
+
+    span {
+      padding: 4px 17px;
+      background-color: var(--color-secondary);
+      border-radius: 48px;
+
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 44px;
+      letter-spacing: 0.0025em;
+    }
+  }
+
+  &__text1,
+  &__text3 {
+    margin-top: 48px;
+  }
+  &__text2,
+  &__text4 {
+    margin-bottom: 48px;
+  }
+}
+
+.steps1,
+.steps3 {
+  padding-top: 120px;
+
+  @media (max-width: 42em) {
+    row-gap: 2rem;
+    .steps__text {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 42em) {
+    flex-flow: column-reverse;
+  }
+  @media (max-width: 62em) {
+    padding-top: 0px;
+  }
+}
+
+.steps4 {
+  @media (max-width: 42em) {
+    row-gap: 2rem;
+  }
+}

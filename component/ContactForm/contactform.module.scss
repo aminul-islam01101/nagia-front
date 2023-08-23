@@ -1,0 +1,61 @@
+.form {
+  width: 344px;
+
+  @media (max-width: 75.25em) {
+    width: 100%;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 44px;
+    letter-spacing: 0.0025em;
+    color: #333333;
+    margin-bottom: 3.2rem;
+  }
+}
+
+.form_group {
+  margin-bottom: 2.4rem;
+  label {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333333;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 0.8px solid #333333;
+    border-radius: 4px;
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.8rem;
+    outline: none;
+
+    font-size: 1.6rem;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #333333;
+  }
+
+  ::-webkit-input-placeholder {
+    font-size: 1.6rem;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #8a8a8a;
+  }
+
+  ::placeholder {
+    font-size: 1.6rem;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #8a8a8a;
+  }
+}
+
+.btn {
+  margin-top: 3.2rem;
+}

@@ -1,0 +1,59 @@
+.terms {
+  margin-top: 70px;
+  margin-bottom: 76px;
+
+  @media (max-width: 55.25em) {
+    margin-top: 30px;
+  }
+
+  h1 {
+    font-family: "Mulish";
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 62px;
+    color: #462a0b;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: "Mulish";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #462a0b;
+    margin-bottom: 40px;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    column-gap: 2.2rem;
+
+    @media (max-width: 40.25em) {
+      grid-template-columns: auto;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.005em;
+      color: #333333;
+
+      .line {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        width: 80%;
+        height: 1px;
+        background-color: black;
+      }
+    }
+
+    span {
+      font-weight: 600;
+      color: #000000;
+    }
+  }
+}
