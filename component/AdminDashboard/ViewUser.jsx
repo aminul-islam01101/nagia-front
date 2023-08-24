@@ -30,7 +30,10 @@ const ViewUser = ({ email, close, data }) => {
           <span> Username: </span>
           {data.username}
         </p>
-       
+        <p>
+          <span> Phone Number: </span>
+          {data?.profile?.phoneNumber || 'Not Provided'}
+        </p>
       </div>
     </div>
   );

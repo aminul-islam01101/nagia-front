@@ -8,7 +8,7 @@ import {
 export const overlappingApi = createApi({
   reducerPath: 'overlappingApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['News', 'Opportunities'],
+  tagTypes: ['News', 'Opportunities','opportunityTitles' ],
 
   endpoints: (builder) => ({
     getAllNews: builder.query({
@@ -26,6 +26,11 @@ export const overlappingApi = createApi({
           limit,
         }),
       providesTags: ['Opportunities'],
+    }),
+    getAllOpportunityTitles: builder.query({
+      query: () =>
+        createRequestWithParams(`http://localhost:5005/api/v1/user/dashboard/opportunity-titles`, ),
+      providesTags: ['opportunityTitles'],
     }),
     createInvestorNews: builder.mutation({
       query: (data) => {
@@ -45,7 +50,7 @@ export const overlappingApi = createApi({
           body: data,
         };
       },
-      invalidatesTags: ['Opportunities'],
+      invalidatesTags: ['Opportunities', 'opportunityTitles'],
     }),
     deleteNews: builder.mutation({
       query: (newsId) => {
@@ -106,6 +111,7 @@ export const {
   useUpdateNewsMutation,
   useGetAllNewsQuery,
   useGetAllOpportunitiesQuery,
+  useGetAllOpportunityTitlesQuery,
   useContactMutation,
 } = overlappingApi;
 

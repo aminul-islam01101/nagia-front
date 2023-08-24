@@ -42,10 +42,6 @@ const Callback = () => {
       skip,
     }
   );
-
-  console.log('🌼 🔥🔥 file: callback.js:46 🔥🔥 Callback 🔥🔥  verify🌼',  verify);
-  console.log('🌼 🔥🔥 file: callback.js:46 🔥🔥 Callback 🔥🔥  error,🌼',  error,);
-
   const reverify = () => {
     window.location.reload();
   };

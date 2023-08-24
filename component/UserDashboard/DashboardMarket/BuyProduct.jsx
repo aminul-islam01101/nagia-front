@@ -1,27 +1,31 @@
-import { Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import Button from "../../onboarding/Button";
-import * as Yup from "yup";
-import styles from "./dashboardmarket.module.scss";
+import { Field, Form, Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import Button from '../../onboarding/Button';
+import * as Yup from 'yup';
+import styles from './dashboardmarket.module.scss';
 import {
   useBuyProductMutation,
   useCheckoutMutation,
   useGetCheckoutDetailsQuery,
-} from "@/states/services/userApi";
-import { valuesIn } from "lodash";
-import { useSelector } from "react-redux";
-import { Toaster, toast } from "react-hot-toast";
-import { useRouter } from "next/router";
-import { reset } from "@/states/slices/authSlice";
+} from '@/states/services/userApi';
+import { valuesIn } from 'lodash';
+import { useSelector } from 'react-redux';
+import { Toaster, toast } from 'react-hot-toast';
+import { toast as newToast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { reset } from '@/states/slices/authSlice';
+import ButtonWithLoader from '@/component/Misc/ButtonWithLoader';
 
 const BuyProduct = ({ product, price, pid }) => {
   const [investmentId, setInvestmentId] = useState();
   const [amount, setAmount] = useState();
   const [newCheckout, setNewCheckout] = useState(false);
   const [storage, setStorage] = useState(false);
-  const [quantity, setQuantity] = useState("");
-  const [realPrice, setRealPrice] = useState("");
+  const [quantity, setQuantity] = useState('');
+  const [realPrice, setRealPrice] = useState('');
   const [serviceFee, setServiceFee] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [reconfirm, setReconfirm] = useState(false);
 
   const router = useRouter();
 
@@ -44,12 +48,8 @@ const BuyProduct = ({ product, price, pid }) => {
 
   //TO GET PREVIOUS CHECKOUT INFO
   const { data: checkoutDetails, isFetching: isLoadingCheckout } =
-  
-
     useGetCheckoutDetailsQuery();
   const [myCheckout, setMyCheckout] = useState();
-  console.log('🌼 🔥🔥 file: BuyProduct.jsx:47 🔥🔥 BuyProduct 🔥🔥 checkoutDetails🌼', checkoutDetails);
-
   // EFFECT TO SET CHECKOUT INFO IN STATE INITIALLY
   useEffect(() => {
     setMyCheckout(checkoutDetails?.data.checkoutInfo[0]);
@@ -69,38 +69,98 @@ const BuyProduct = ({ product, price, pid }) => {
   };
 
   //SUBMIT FUNCTION
+  // const handleSubmit = async (values) => {
+  //   setLoading(true)
+  //   if (values.acceptTerms === true) {
+  //     const payload = {
+  //       ...values,
+  //       amount: realPrice * 100,
+  //       investmentOpportunityId: pid,
+  //     };
+  //     await checkout(payload);
+  //     setMyCheckout(checkoutData);
+  //   await  buyProduct(payload);
+  //   }
+  //   if (values.acceptTerms === false) {
+  //     toast.error("please accept terms");
+  //   }
+  // };
   const handleSubmit = async (values) => {
+    if (values.acceptTerms === '') {
+      toast.error('please accept terms');
+      return;
+    }
+   
     if (values.acceptTerms === true) {
       const payload = {
         ...values,
         amount: realPrice * 100,
         investmentOpportunityId: pid,
       };
-      await checkout(payload);
-      setMyCheckout(checkoutData);
-      buyProduct(payload);
-    }
-    if (values.acceptTerms === false) {
-      toast.error("please accept terms");
+      if (payload.amount === 0) {
+      
+        newToast.error('please confirm your amount first');
+        return;
+      }
+      setLoading(true);
+      try {
+        // Attempt the checkout
+        const checkoutResult = await checkout(payload);
+
+        // If the checkout is successful, set myCheckout to checkoutData
+        if (checkoutResult.data.status === 'success') {
+          setMyCheckout(checkoutResult?.data?.data?.data);
+
+          // Now you can proceed with buyProduct
+          await buyProduct(payload);
+        } else {
+          // Handle the case where checkout was not successful
+          // You can access checkoutResult.error for more details
+          toast.error('Checkout failed: ');
+        }
+      } catch (error) {
+        // Handle any other errors that might occur during the process
+        toast.error('An error occurred during checkout: ' + error.message);
+      }
+    } else {
+      toast.error('Please accept terms');
     }
   };
 
   // SUBMIT FUNCTION WHEN USING PREV STORED CHECKOUT INFO
   const handleSubmitDefault = async (values) => {
+    if (values.acceptTerms === '') {
+      newToast.error("please accept terms");
+      return
+    }
+
+    if (!myCheckout){
+      newToast.error("You dont have any checkout info. Please add new checkout info")
+      return
+    }
     if (values.acceptTerms === true) {
       const payload = {
         ...values,
         amount: realPrice * 100,
         investmentOpportunityId: pid,
       };
-      buyProduct(payload);
-    }
-    if (values.acceptTerms === false) {
-      toast.error("please accept terms");
+      if (payload.amount === 0) {
+        setLoading(false);
+        newToast.error('please confirm your amount first');
+        return;
+      }
+      setLoading(true);
+    
+      await buyProduct(payload);
     }
   };
 
   const handleTotalCost = (values) => {
+    if (!values.quantity) {
+      newToast.error('Please enter a quantity first');
+      return;
+    }
+
     setQuantity(values.quantity);
 
     const productAmount = product?.data.opportunity.amount * values.quantity;
@@ -108,6 +168,8 @@ const BuyProduct = ({ product, price, pid }) => {
     const totalCost = productAmount + fee;
 
     setServiceFee(fee);
+    setReconfirm(true);
+    newToast.success('Your amount has been confirmed');
   };
 
   // const totalFee =
@@ -120,7 +182,7 @@ const BuyProduct = ({ product, price, pid }) => {
   // }
 
   useEffect(() => {
-    if (storage === "true") {
+    if (storage === 'true') {
       setRealPrice(
         product?.data.opportunity.amount * quantity +
           1500 * quantity +
@@ -142,14 +204,16 @@ const BuyProduct = ({ product, price, pid }) => {
     }
 
     if (isSuccess) {
-      toast.success(data.message);
-      console.log('🌼 🔥🔥 file: BuyProduct.jsx:143 🔥🔥 useEffect 🔥🔥 data🌼', data);
-
-      localStorage.setItem("checkoutId", myCheckout?.id);
-      localStorage.setItem("userInvId", data?.data.products.id);
+      setLoading(false);
+      newToast.success(data.message);
+      localStorage.setItem('checkoutId', myCheckout?.id);
+      localStorage.setItem('userInvId', data?.data.products.id);
       router.push(data?.data.transactionResult.data.authorization_url);
     }
-  }, [error, isSuccess, data, router, myCheckout?.id]);
+    if (isError) {
+      setLoading(false);
+    }
+  }, [error, isSuccess, isError, data, router, myCheckout?.id]);
 
   useEffect(() => {
     if (isSuccessCheck) {
@@ -159,16 +223,16 @@ const BuyProduct = ({ product, price, pid }) => {
 
   //VALIDATION FOR NEW CHECKOUT
   const BuySchema = Yup.object().shape({
-    quantity: Yup.number().min(10).required("Required!"),
-    email: Yup.string().required("Required!"),
-    name: Yup.string().required("Required!"),
-    address: Yup.string().required("Required!"),
-    phoneNumber: Yup.number().required("Required!"),
+    quantity: Yup.number().min(10).required('Required!'),
+    email: Yup.string().required('Required!'),
+    name: Yup.string().required('Required!'),
+    address: Yup.string().required('Required!'),
+    phoneNumber: Yup.number().required('Required!'),
   });
 
   //VALIDATION FOR PREV STORED CHECKOUT
   const DefaultBuySchema = Yup.object().shape({
-    quantity: Yup.number().min(10).required("Required!"),
+    quantity: Yup.number().min(10).required('Required!'),
   });
 
   return (
@@ -188,7 +252,7 @@ const BuyProduct = ({ product, price, pid }) => {
 
           <div className={styles.product}>
             <h4>Storage Cost</h4>
-            {storage == "true" ? (
+            {storage == 'true' ? (
               <p>NGN1500/bag per year</p>
             ) : (
               <p>No storage cost</p>
@@ -197,7 +261,7 @@ const BuyProduct = ({ product, price, pid }) => {
         </div>
         <div className={styles.totalcost}>
           <h2>
-            Total Cost{" "}
+            Total Cost{' '}
             <span>
               NGN {realPrice} (including NGN {serviceFee} service fee)
             </span>
@@ -206,18 +270,22 @@ const BuyProduct = ({ product, price, pid }) => {
       </div>
       {!newCheckout && (
         <div className={styles.form_group}>
-          <label htmlFor="bankAccount">Choose Checkout</label>
+          <label htmlFor='bankAccount'>Choose Checkout</label>
           <select onChange={(e) => handleCheckoutDetails(e.target.value)}>
-            <option value="none" selected disabled hidden>
+            <option value='none' selected disabled hidden>
               Select checkout details to use
             </option>
-            {checkoutDetails?.data.checkoutInfo.map((item) => {
-              return (
-                <option value={item.id} key={item.id}>
-                  {item.address}
-                </option>
-              );
-            })}
+            {checkoutDetails?.data.checkoutInfo.length > 0 ? (
+              checkoutDetails?.data.checkoutInfo.map((item) => {
+                return (
+                  <option value={item.id} key={item.id}>
+                    {item.address}
+                  </option>
+                );
+              })
+            ) : (
+              <option>You dont have any checkout info</option>
+            )}
           </select>
         </div>
       )}
@@ -225,7 +293,7 @@ const BuyProduct = ({ product, price, pid }) => {
       <div className={`${styles.form_group} ${styles.storage}`}>
         <h3>Do you want storage?</h3>
         <select onChange={(e) => handleStorage(e.target.value)}>
-          <option value="none" selected disabled hidden>
+          <option value='none' selected disabled hidden>
             Select an Option
           </option>
 
@@ -240,11 +308,11 @@ const BuyProduct = ({ product, price, pid }) => {
             initialValues={{
               // investmentOpportunityId: pid,
               // amount: price,
-              currency: "NGN",
-              quantity: "",
-              paymentMethod: "paystack",
+              currency: 'NGN',
+              quantity: '',
+              paymentMethod: 'paystack',
               email: user.email,
-              acceptTerms: "",
+              acceptTerms: '',
             }}
             enableReinitialize
             onSubmit={handleSubmitDefault}
@@ -253,23 +321,24 @@ const BuyProduct = ({ product, price, pid }) => {
             {({ errors, touched, values }) => (
               <Form>
                 <div className={styles.form_group}>
-                  <label htmlFor="quantity">Quantity</label>
+                  <label htmlFor='quantity'>Quantity</label>
                   <Field
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="enter quantity "
+                    type='number'
+                    id='quantity'
+                    name='quantity'
+                    placeholder='enter quantity '
                   />
-                  <button
-                    type="button"
+                
+                  {errors.quantity && touched.quantity ? (
+                    <div style={{color:'red', fontSize:'16px'}}>*{errors.quantity}</div>
+                  ) : null}
+                    <button
+                    type='button'
                     className={styles.checkcost}
                     onClick={() => handleTotalCost(values)}
                   >
-                    Confirm Amount
+                    {!reconfirm ? 'Confirm Amount' : 'Reconfirm'}
                   </button>
-                  {errors.quantity && touched.quantity ? (
-                    <div>{errors.quantity}</div>
-                  ) : null}
                 </div>
                 <div className={styles.checkoutdetail}>
                   <p>{myCheckout?.name}</p>
@@ -282,18 +351,18 @@ const BuyProduct = ({ product, price, pid }) => {
                   className={styles.checkoutdetails__btn}
                   onClick={() => setNewCheckout(true)}
                 >
-                  <Button type="button" text="Add new checkout info" />
+                  <Button type='button' text='Add new checkout info' />
                 </div>
 
                 <div className={styles.terms}>
-                  <Field type="checkbox" id="acceptTerms" name="acceptTerms" />
-                  <label htmlFor="acceptTerms">
-                    Accept Terms{" "}
+                  <Field type='checkbox' id='acceptTerms' name='acceptTerms' />
+                  <label htmlFor='acceptTerms'>
+                    Accept Terms{' '}
                     <span>
                       <a
-                        href="http://nagaing.com/termsofservice"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href='http://nagaing.com/termsofservice'
+                        target='_blank'
+                        rel='noopener noreferrer'
                       >
                         Read Terms
                       </a>
@@ -302,7 +371,11 @@ const BuyProduct = ({ product, price, pid }) => {
                 </div>
 
                 <div className={styles.btn}>
-                  <Button type="submit" text="Proceed" />
+                  <ButtonWithLoader
+                    btnText={'Proceed'}
+                    btnType={'submit'}
+                    loading={loading}
+                  />
                 </div>
               </Form>
             )}
@@ -313,14 +386,14 @@ const BuyProduct = ({ product, price, pid }) => {
           initialValues={{
             // investmentOpportunityId: pid,
             // amount: price,
-            currency: "NGN",
-            quantity: "",
-            paymentMethod: "paystack",
+            currency: 'NGN',
+            quantity: '',
+            paymentMethod: 'paystack',
             email: user.email,
-            phoneNumber: "",
-            name: "",
-            address: "",
-            acceptTerms: "",
+            phoneNumber: '',
+            name: '',
+            address: '',
+            acceptTerms: '',
           }}
           enableReinitialize
           onSubmit={handleSubmit}
@@ -330,76 +403,83 @@ const BuyProduct = ({ product, price, pid }) => {
             <Form>
               <div className={styles.groupone}>
                 <div className={styles.form_group}>
-                  <label htmlFor="quantity">Quantity</label>
+                  <label htmlFor='quantity'>Quantity</label>
                   <Field
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="enter quantity "
+                    type='number'
+                    id='quantity'
+                    name='quantity'
+                    placeholder='enter quantity '
                   />
-                  <button
-                    type="button"
+                   {errors.quantity && touched.quantity ? (
+                    <div style={{color:'red', fontSize:'16px'}}>*{errors.quantity}</div>
+                  ) : null}
+                   <button
+                    type='button'
                     className={styles.checkcost}
                     onClick={() => handleTotalCost(values)}
                   >
-                    Check cost
+                    {!reconfirm ? 'Confirm Amount' : 'Reconfirm'}
                   </button>
-                  {errors.quantity && touched.quantity ? (
-                    <div>{errors.quantity}</div>
-                  ) : null}
+                 
                 </div>
                 <div className={styles.form_group}>
-                  <label htmlFor="name">Full Name</label>
-                  <Field id="name" name="name" placeholder="enter full name " />
+                  <label htmlFor='name'>Full Name</label>
+                  <Field id='name' name='name' placeholder='enter full name ' />
                   {errors.name && touched.name ? (
-                    <div>{errors.name}</div>
+                    <div style={{color:'red', fontSize:'16px'}}>*{errors.name}</div>
                   ) : null}
                 </div>
               </div>
               <div className={styles.groupone}>
                 <div className={styles.form_group}>
-                  <label htmlFor="email">Email</label>
-                  <Field id="email" name="email" placeholder="enter email " />
+                  <label htmlFor='email'>Email</label>
+                  <Field
+                    id='email'
+                    name='email'
+                    placeholder='enter email'
+                    readOnly
+                  />
+
                   {errors.email && touched.email ? (
-                    <div>{errors.email}</div>
+                    <div style={{color:red}}>{errors.email}</div>
                   ) : null}
                 </div>
                 <div className={styles.form_group}>
-                  <label htmlFor="phoneNumber">Phone Number</label>
+                  <label htmlFor='phoneNumber'>Phone Number</label>
                   <Field
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="enter phone number"
+                    id='phoneNumber'
+                    name='phoneNumber'
+                    placeholder='enter phone number'
                   />
                   {errors.phoneNumber && touched.phoneNumber ? (
-                    <div>{errors.phoneNumber}</div>
+                    <div style={{color:'red', fontSize:'16px'}}>*{errors.phoneNumber}</div>
                   ) : null}
                 </div>
                 <div className={styles.form_group}>
-                  <label htmlFor="address">Address</label>
+                  <label htmlFor='address'>Address</label>
                   <Field
-                    id="address"
-                    name="address"
-                    placeholder="enter address"
+                    id='address'
+                    name='address'
+                    placeholder='enter address'
                   />
                   {errors.address && touched.address ? (
-                    <div>{errors.address}</div>
+                    <div style={{color:'red', fontSize:'16px'}}>*{errors.address}</div>
                   ) : null}
                 </div>
               </div>
 
               <div className={styles.terms}>
-                <Field type="checkbox" id="acceptTerms" name="acceptTerms" />
-                <label htmlFor="acceptTerms">
-                  Accept Terms{" "}
+                <Field type='checkbox' id='acceptTerms' name='acceptTerms' />
+                <label htmlFor='acceptTerms'>
+                  Accept Terms{' '}
                   <span>
                     <a
-                      href="http://nagaing.com/termsofservice"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href='http://nagaing.com/termsofservice'
+                      target='_blank'
+                      rel='noopener noreferrer'
                     >
                       Read Terms
-                    </a>{" "}
+                    </a>{' '}
                     |
                   </span>
                 </label>
@@ -412,7 +492,12 @@ const BuyProduct = ({ product, price, pid }) => {
                 </div>
               </div>
               <div className={styles.btn}>
-                <Button type="submit" text="Proceed" />
+                {/* <Button type="submit" text="Proceed" /> */}
+                <ButtonWithLoader
+                  btnText={'Proceed'}
+                  btnType={'submit'}
+                  loading={loading}
+                />
               </div>
             </Form>
           )}
