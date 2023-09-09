@@ -12,11 +12,16 @@ import {
 } from '@/states/services/adminApi';
 import Popup from 'reactjs-popup';
 import { useEffect, useRef, useState } from 'react';
+import { toast as newToast } from 'react-toastify';
+import {AiTwotoneDelete , AiFillEdit} from 'react-icons/ai'
 import { toast } from 'react-hot-toast';
 import ViewUserDetails from '@/component/AdminDashboard/ViewAccountDetails';
 import ViewAccountDetails from '@/component/AdminDashboard/ViewAccountDetails';
 import ViewUser from '@/component/AdminDashboard/ViewUser';
-SendMailPopup;
+import { useDeleteAccountMutation } from '@/states/services/userApi';
+import { ButtonFill } from '@/component/Misc/Buttons';
+import UpdateAccount from '../DashboardSetttings/UpdateAccount';
+
 
 const Table = ({ header, data, type, refetch=''  }) => {
   const [
@@ -193,6 +198,8 @@ const AdminUsers = ({ data, user }) => {
   const mailRef = useRef();
   const closeTooltip = () => ref.current.close();
 
+
+
   return (
     <tr key={data.id} className={styles.adminuserrow}>
       {/* <td>
@@ -250,12 +257,68 @@ const AdminUsers = ({ data, user }) => {
 };
 
 const UserAccount = ({ data, test }) => {
+  const [updateData, setUpdateData] = useState({})
+  const [accountMessage, setAccountMessage] = useState('');
+  const [deleteAccount, {  isLoading, isSuccess, isError, error }] =
+  useDeleteAccountMutation();
+  const ref = useRef();
+  const closeTooltip = () => ref.current.close();
+
+  const handleDelete= async(id)=>{
+   await deleteAccount(id)
+  }
+  const handleUpdate= async(data)=>{
+    setUpdateData(data)
+  
+   
+  }
+  useEffect(()=>{
+    if( isSuccess){
+      newToast.success("Account details deleted successfully")
+    }
+  }, [isSuccess])
   return (
-    <tr key={data.id}>
+    <tr key={data?.id}>
       <td>{data?.accountHolderName}</td>
       <td>{data?.accountNumber}</td>
       <td>{data?.bankName}</td>
-      <td></td>
+      <td style={{display:'flex', gap:'5px'}}>
+       <button type='button'   style={{
+    color: 'white',
+    backgroundColor: 'red',
+    borderRadius: '4px',
+    border: 'none',
+    padding: '5px 10px',
+    cursor: 'pointer',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+    transition: 'background-color 0.3s ease',
+  }} onClick={()=>handleDelete(data?.id)}> <MdDelete/></button>
+       <Popup
+                      ref={ref}
+                      trigger={
+                        <button type='button' style={{
+                          color: 'white',
+                          backgroundColor: '#228c22',
+                          borderRadius: '4px',
+                          border: 'none',
+                          padding: '5px 10px',
+                          cursor: 'pointer',
+                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                          transition: 'background-color 0.3s ease',
+                        }}  > <AiFillEdit/> </button>
+                      }
+                      arrow={false}
+                      modal
+                    >
+                      <UpdateAccount
+                      updateData={data}
+                        close={closeTooltip}
+                        setAccountMessage={setAccountMessage}
+                      />
+                    </Popup>
+        </td>
+
+    
     </tr>
   );
 };

@@ -8,7 +8,7 @@ import {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Notification', 'transaction'],
+  tagTypes: ['Notification', 'transaction','accounts'],
 
   endpoints: (builder) => ({
     // getAllNews: builder.query({
@@ -103,6 +103,7 @@ export const userApi = createApi({
     getAccountDetails: builder.query({
       query: (accountId) =>
         createRequestWithParams(`http://localhost:5005/api/v1/user/dashboard/account-details/${accountId}`),
+        providesTags: ['accounts'],
     }),
     getStats: builder.query({
       query: () => createRequestWithParams(`http://localhost:5005/api/v1/user/dashboard/investment-stats`),
@@ -120,6 +121,26 @@ export const userApi = createApi({
           body: data,
         };
       },
+      invalidatesTags: ['accounts',],
+    }),
+    updateAccount: builder.mutation({
+      query: (data) => {
+        return {
+          url: `http://localhost:5005/api/v1/user/dashboard/update-account/${data.id}`,
+          method: 'PATCH',
+          body: data.values,
+        };
+      },
+      invalidatesTags: ['accounts',],
+    }),
+    deleteAccount: builder.mutation({
+      query: (id) => {
+        return {
+          url: `http://localhost:5005/api/v1/user/dashboard/delete-account/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['accounts',],
     }),
     // NOTIFICATIONS
 
@@ -164,6 +185,8 @@ export const {
   useBuyProductMutation,
   useSellProductMutation,
   useAddAccountMutation,
+  useUpdateAccountMutation,
+  useDeleteAccountMutation,
   useVerifyPaymentQuery,
   useVerifyPaymentMutation,
   useGetAccountDetailsQuery,

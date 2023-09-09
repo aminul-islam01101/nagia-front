@@ -46,7 +46,7 @@ const Settings = () => {
       toast(accountMessage);
     }
   }, [accountMessage, setAccountMessage]);
-
+// console.log(account)
   return (
     <div>
       {' '}

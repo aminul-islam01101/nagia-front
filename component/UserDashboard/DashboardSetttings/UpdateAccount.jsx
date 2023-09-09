@@ -4,31 +4,38 @@ import Button from '../../onboarding/Button';
 import * as Yup from 'yup';
 import axios from 'axios';
 import styles from './dashboardsettings.module.scss';
-import { useAddAccountMutation } from '@/states/services/userApi';
+import { useUpdateAccountMutation } from '@/states/services/userApi';
 import { useSelector } from 'react-redux';
 import { Toaster, toast } from 'react-hot-toast';
 import { toast as newToast } from 'react-toastify';
 import { banklist } from '../../../utils/banklist';
 import ButtonWithLoader from '@/component/Misc/ButtonWithLoader';
 
-const AddAccount = ({ close, setAccountMessage }) => {
+const UpdateAccount = ({updateData, close, setAccountMessage }) => {
+
+    console.log(updateData)
   //ADD ACCOUNT MUTATION FOM REDUX
-  const [addAccount, { data, isLoading, isSuccess, isError, error }] =
-    useAddAccountMutation();
+  const [updateAccount, { data, isLoading, isSuccess, isError, error }] =
+  useUpdateAccountMutation();
   //SUBMIT FUNCTION
   const handleSubmit = async (values, { resetForm }) => {
-    await addAccount(values);
+    const allData = {
+        id: updateData.id, // Assuming you have an 'id' field in 'values'
+        values, // Assuming you have another set of data called 'otherData' in 'values'
+      };
+    await updateAccount(allData);
     resetForm({ values: '' });
     close();
   };
 
   useEffect(() => {
     if (error) {
-      // setAccountMessage(error.data.message);
-      newToast.error(error.data.message)
+    //   setAccountMessage(error.data.message);
+    newToast.error(error?.data?.message)
     }
     if (isSuccess) {
-      newToast.success(data.message);
+    //   setAccountMessage(data.message);
+    newToast.success(data?.message);
     }
   }, [error, isSuccess, setAccountMessage, data?.message]);
 
@@ -39,14 +46,14 @@ const AddAccount = ({ close, setAccountMessage }) => {
   });
   return (
     <div className={styles.addacount}>
-      <h2>Add Account</h2>
+      <h2>Update Account</h2>
 
       <Formik
-        initialValues={{
-          accountNumber: '',
-          accountHolderName: '',
-          bankName: '',
-        }}
+       initialValues={{
+        accountNumber: updateData.accountNumber || '',
+        accountHolderName: updateData.accountHolderName || '',
+        bankName: updateData.bankName || 'none', // Set the default value for bankName
+      }}
         onSubmit={handleSubmit}
         validationSchema={AccountSchema}
       >
@@ -118,4 +125,4 @@ const AddAccount = ({ close, setAccountMessage }) => {
   );
 };
 
-export default AddAccount;
+export default UpdateAccount;
