@@ -3,7 +3,7 @@ import DashboardPage from '@/component/DashboardGlobalComponents/DashboardPage';
 import styles from './admin.module.scss';
 import { adminUsers } from '@/utils/adminUsers';
 import Table from '@/component/UserDashboard/DashboardHistory/Table';
-import { useGetAllUsersQuery } from '@/states/services/adminApi';
+import { useDeleteSellMutation, useDeleteTransactionsMutation, useDeleteUserInvestmentMutation, useGetAllUsersQuery } from '@/states/services/adminApi';
 import Pagination from '@/component/Misc/Pagination';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -28,7 +28,13 @@ const User = () => {
   ];
 
   const { data: users, isFetching: isLoading } = useGetAllUsersQuery(query);
-
+  const [deleteSell, { data: sellData,  }] =
+  useDeleteSellMutation();
+  const [deleteUserInvestment, { data: userInvestment,  }] =
+  useDeleteUserInvestmentMutation();
+  const [deleteTransactions, { data: transactions,  }] =
+  useDeleteTransactionsMutation();
+console.log(sellData)
   const handlePageClick = async (data) => {
     // console.log(data);
 
@@ -38,9 +44,21 @@ const User = () => {
   };
 
   const pageCount = users?.data.totalPage;
+  const handleDeleteSell =async () => {
+   await deleteSell ()
+  }
+  const handleDeleteInvestment =async () => {
+   await deleteUserInvestment ()
+  }
+  const handleDeleteTransaction =async () => {
+   await deleteTransactions ()
+  }
 
   return (
     <DashboardPage title='Users' type='admin'>
+       <button type="button" onClick={handleDeleteSell} className="">delete sell rows</button>
+       <button type="button" onClick={handleDeleteInvestment} className="">delete investment rows</button>
+       <button type="button" onClick={handleDeleteTransaction} className="">delete transaction rows</button>
       <div className={styles.users}>
         {/* <AdminFilter /> */}
         <div className={styles.table}>

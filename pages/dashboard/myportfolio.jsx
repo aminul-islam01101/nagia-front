@@ -35,9 +35,26 @@ const Myportfolio = () => {
   const { data: stats, isFetching: isLoadingStats } = useGetStatsQuery(query);
 
   const userInvestmentsResult =
-    userInvestments?.data.data.userInvestment.filter(
-      (userInvestments) => userInvestments.status !== 'pending'
-    );
+  userInvestments?.data.data.userInvestment.filter(
+    (userInvestments) => {
+      const amountToSell = userInvestments.quantity- (userInvestments. sellRequestQuantity + userInvestments. soldQuantity)
+      return userInvestments.status !== 'pending' && amountToSell > 0
+    }
+  );
+  const userInvestmentsSolds =
+  userInvestments?.data.data.userInvestment.filter(
+    (userInvestments) => {
+      const amountToSell = userInvestments.quantity - (userInvestments.sellRequestQuantity )
+      return userInvestments.status !== 'pending' && amountToSell === 0
+    }
+  );
+  const userInvestmentsUnsolds=
+  userInvestments?.data.data.userInvestment.filter(
+    (userInvestments) => {
+      const amountToSell = userInvestments.quantity- (userInvestments. sellRequestQuantity )
+      return userInvestments.status !== 'pending' && amountToSell > 0
+    }
+  );
   // console.log(userInvestmentsResult);
 
   return (
@@ -53,7 +70,16 @@ const Myportfolio = () => {
           </div>
 
           <div className={styles.portfolioperfomance}>
-            {userInvestmentsResult?.map((item) => {
+            {userInvestmentsUnsolds?.map((item) => {
+              return (
+                <div className='' key={item.id}>
+                  <PortfolioPerfomance data={item} />
+                </div>
+              );
+            })}
+          </div>
+          <div className={styles.portfolioperfomance}>
+            {userInvestmentsSolds ?.map((item) => {
               return (
                 <div className='' key={item.id}>
                   <PortfolioPerfomance data={item} />

@@ -18,7 +18,7 @@ import ViewAccountDetails from '@/component/AdminDashboard/ViewAccountDetails';
 import ViewUser from '@/component/AdminDashboard/ViewUser';
 SendMailPopup;
 
-const Table = ({ header, data, type, transactionType }) => {
+const Table = ({ header, data, type, refetch=''  }) => {
   const [
     approveSell,
     { data: approveSellRes, isLoading, isSuccess, isError, error },
@@ -53,6 +53,7 @@ const Table = ({ header, data, type, transactionType }) => {
                     key={i}
                     data={data}
                     approveSell={approveSell}
+                    refetch={refetch}
                   />
                 );
               }
@@ -96,16 +97,21 @@ const UserHistory = ({ data }) => {
   );
 };
 
-const AdminHistoryWithdraw = ({ data, approveSell }) => {
+const AdminHistoryWithdraw = ({ data, approveSell ,refetch }) => {
+
+  console.log(data)
   const values = {
     userInvestmentId: data?.UserInvestment.id,
-    transactionId: data?.id,
+    sellProductId: data?.id,
     quantity: data?.quantity,
+    transactionId:data?.transactionId
+
   };
 
   //SEND MAIL HANDLER
   const handleSubmit = async () => {
     await approveSell(values);
+    refetch()
   };
 
   const ref = useRef();
@@ -146,7 +152,7 @@ const AdminHistoryWithdraw = ({ data, approveSell }) => {
           onClick={handleSubmit}
           disabled={data.approved}
         >
-          {data.approved ? 'Approved' : 'Approve'}
+          {data.status === 'approved' ? 'Approved' : 'Approve'}
         </button>
       </td>
     </tr>

@@ -34,6 +34,7 @@ export const adminApi = createApi({
           page,
           limit,
         }),
+        providedTags:['sell']
     }),
     deleteUser: builder.mutation({
       query: (id) => {
@@ -43,6 +44,33 @@ export const adminApi = createApi({
         };
       },
       invalidatesTags: ['Users'],
+    }),
+    deleteSell: builder.mutation({
+      query: (id) => {
+        return {
+          url: `http://localhost:5005/api/v1/delete-sell`,
+          method: 'delete',
+        };
+      },
+      
+    }),
+    deleteUserInvestment: builder.mutation({
+      query: (id) => {
+        return {
+          url: `http://localhost:5005/api/v1/delete-user-investment`,
+          method: 'delete',
+        };
+      },
+      
+    }),
+    deleteTransactions: builder.mutation({
+      query: (id) => {
+        return {
+          url: `http://localhost:5005/api/v1/delete-transaction`,
+          method: 'delete',
+        };
+      },
+      
     }),
     approveTransaction: builder.mutation({
       query: (data) => {
@@ -136,6 +164,10 @@ export const {
   useUpdateOpportunityMutation,
   useUpdateNewsMutation,
   useGetAccountDetailsAdminQuery,
+  useDeleteSellMutation,
+  useDeleteUserInvestmentMutation,
+  useDeleteTransactionsMutation
+  
 } = adminApi;
 
 // providesTags: ['Users'],

@@ -31,7 +31,7 @@ export const initialQueryCashout = {
 const History = () => {
   const [queryDeposit, setQueryDeposit] = useState(initialQueryDeposit);
   const [queryCashout, setQueryCashout] = useState(initialQueryCashout);
-  const [selectedTab, setSelectedTab] = useTabs(['cashout', 'deposit']);
+  const [selectedTab, setSelectedTab] = useTabs([ 'cashout', 'deposit', ]);
 
   const headerDeposit = [
     'Name',
@@ -57,7 +57,10 @@ const History = () => {
     data: toApprove,
     isFetching: isLoadingOpp,
     isError: isErrorOpp,
+    refetch
   } = useGetUsersProductApproveQuery(queryCashout);
+  
+
 
   //GET ALL TRANSACTIONS FOM REDUX
   const {
@@ -65,7 +68,6 @@ const History = () => {
     isFetching,
     isError: isErrorTransaction,
   } = useGetAllTransactionsQuery(queryDeposit);
-
   const handlePageClickDeposit = async (data) => {
     // console.log(data.selected);
 
@@ -91,18 +93,19 @@ const History = () => {
         {/* <AdminFilter /> */}
         <nav className={styles.tabsheading}>
           <div className={styles.tabs}>
+          <TabSelector
+              isActive={selectedTab === 'deposit'}
+              onClick={() => setSelectedTab('deposit')}
+            >
+              All
+            </TabSelector>
             <TabSelector
               isActive={selectedTab === 'cashout'}
               onClick={() => setSelectedTab('cashout')}
             >
               Cashout
             </TabSelector>
-            <TabSelector
-              isActive={selectedTab === 'deposit'}
-              onClick={() => setSelectedTab('deposit')}
-            >
-              Deposit
-            </TabSelector>
+          
           </div>
           {/* <DataFilter outerBackground="#FFFFFF" inner="#F3EEEB" /> */}
         </nav>
@@ -113,6 +116,7 @@ const History = () => {
                 data={toApprove?.data.sell}
                 header={headerWithdraw}
                 type='adminhistorywithdraw'
+                refetch={refetch}
               />
 
               <ReactPaginate

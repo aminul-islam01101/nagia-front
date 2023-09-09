@@ -11,6 +11,7 @@ import {
 import { valuesIn } from 'lodash';
 import { useSelector } from 'react-redux';
 import { Toaster, toast } from 'react-hot-toast';
+import {  toast as newToast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import ButtonWithLoader from '../Misc/ButtonWithLoader';
 
@@ -24,6 +25,21 @@ const SellProduct = ({ product, close }) => {
 
   //SUBMIT FUNCTION
   const handleSubmit = async (values, { resetForm }) => {
+    
+    if(product?.quantity - product?.sellRequestQuantity <10 ){
+      newToast.error('Minimum available quantity to sell request is 10 bags')
+      return
+    }
+
+    if(values?.quantity  <10 ){
+      newToast.error('Minimum  quantity to sell request is 10 bags')
+      return
+    }
+   if ( values.quantity >( product?.quantity - product?.sellRequestQuantity )){
+    newToast.error('You cant make sell request greater than available sell request quantity')
+    return
+   }
+ 
     await sellProduct(values);
     resetForm({ values: '' });
   };
@@ -64,13 +80,23 @@ const SellProduct = ({ product, close }) => {
           <div className={styles.details}>
             <div className={styles.product}>
               <h4>{product.investmentOpportunity.title}</h4>
+              
+              
               {/* <p>+0.25%</p> */}
             </div>
+            
        
           <div className={styles.change}>
             <a onClick={close}>Close</a>
           </div>
+          
         </div>
+        <p ><span style={{fontWeight: "bold"}}> Total Invested:</span>  {product?.quantity + product?.soldQuantity || 0} bags </p>
+        <p><span style={{fontWeight: "bold"}}> Quantity sold:</span>  { product?.soldQuantity || 0} bags </p>
+        <p><span style={{fontWeight: "bold"}}> Quantity requested to sell:</span>  { product?.sellRequestQuantity
+ || 0} bags </p>
+        <p><span style={{fontWeight: "bold"}}> Quantity available to sell request:</span>  {product?.quantity - product?.sellRequestQuantity
+ || 0} bags </p>
       </div>
       <Formik
         initialValues={{

@@ -42,15 +42,19 @@ const Dashboard = () => {
     useGetChartStatsQuery();
 
   const { data: userInvestments, isFetching: isLoadingInv } =
+   
+
     useGetUserInvestmentDetailsQuery({
       limit: query.limit,
       page: query.page,
       userId,
     });
-
   const userInvestmentsResult =
     userInvestments?.data.data.userInvestment.filter(
-      (userInvestments) => userInvestments.status !== 'pending'
+      (userInvestments) => {
+        const amountToSell = userInvestments.quantity- (userInvestments. sellRequestQuantity + userInvestments. soldQuantity)
+        return userInvestments.status !== 'pending' && amountToSell > 0
+      }
     );
 
   // console.log(result);

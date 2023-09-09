@@ -19,8 +19,17 @@
 
 .table {
   margin-top: 33px;
-}
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  align-items: space-between;
+  min-height:70vh
 
+}
+.tabs {
+  display: flex;
+  column-gap: 2.4rem;
+}
 .top {
   display: flex;
   align-items: center;

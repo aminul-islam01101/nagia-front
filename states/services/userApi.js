@@ -8,7 +8,7 @@ import {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Notification'],
+  tagTypes: ['Notification', 'transaction'],
 
   endpoints: (builder) => ({
     // getAllNews: builder.query({
@@ -35,6 +35,7 @@ export const userApi = createApi({
           page,
           limit,
         }),
+        providesTags: ['transaction'],
     }),
     getUserInvestmentDetails: builder.query({
       query: ({ limit, page, userId }) =>
@@ -87,6 +88,7 @@ export const userApi = createApi({
           body: data,
         };
       },
+      invalidatesTags: ['transaction',],
     }),
 
     verifyPayment: builder.query({
