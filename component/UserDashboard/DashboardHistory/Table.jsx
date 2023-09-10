@@ -21,9 +21,10 @@ import ViewUser from '@/component/AdminDashboard/ViewUser';
 import { useDeleteAccountMutation } from '@/states/services/userApi';
 import { ButtonFill } from '@/component/Misc/Buttons';
 import UpdateAccount from '../DashboardSetttings/UpdateAccount';
+import Link from 'next/link';
 
 
-const Table = ({ header, data, type, refetch=''  }) => {
+const Table = ({ header, data, type, refetch='', handleInvestment={}  }) => {
   const [
     approveSell,
     { data: approveSellRes, isLoading, isSuccess, isError, error },
@@ -69,7 +70,7 @@ const Table = ({ header, data, type, refetch=''  }) => {
                 return <UserHistory key={i} data={data} />;
               }
               if (type === 'adminusers') {
-                return <AdminUsers key={i} data={data} user={data} />;
+                return <AdminUsers key={i} data={data} user={data} handleInvestment={handleInvestment} />;
               }
               if (type === 'account') {
                 return <UserAccount key={i} data={data} user={data} />;
@@ -190,7 +191,9 @@ const AdminHistoryDeposit = ({ data }) => {
   );
 };
 
-const AdminUsers = ({ data, user }) => {
+const AdminUsers = ({ data, user , handleInvestment}) => {
+
+
   //DELETE USER MUTATION FOM REDUX
   const [deleteUser, { data: userData, isLoading, isSuccess, isError, error }] =
     useDeleteUserMutation();
@@ -233,6 +236,12 @@ const AdminUsers = ({ data, user }) => {
         >
           <ViewUser data={data} close={closeTooltip} />
         </Popup>
+        
+               {data.role==="INVESTOR" &&  <div >
+                <button type="button" onClick={()=>handleInvestment(data)}  className="">invest</button>
+                </div>}
+            
+        
         <div className={styles.delete}>
           {/* <SendMailPopup
             ref={ref}
@@ -251,6 +260,7 @@ const AdminUsers = ({ data, user }) => {
             />
           </Popup>
         </div>
+         
       </td>
     </tr>
   );

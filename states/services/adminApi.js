@@ -147,6 +147,15 @@ export const adminApi = createApi({
           `http://localhost:5005/api/v1/admin/dashboard/account-details/${accountId}`
         ),
     }),
+    adminBuyProduct: builder.mutation({
+      query: (data) => {
+        return {
+          url: `http://localhost:5005/api/v1/admin/dashboard/buy`,
+          method: 'post',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -166,7 +175,8 @@ export const {
   useGetAccountDetailsAdminQuery,
   useDeleteSellMutation,
   useDeleteUserInvestmentMutation,
-  useDeleteTransactionsMutation
+  useDeleteTransactionsMutation,
+  useAdminBuyProductMutation
   
 } = adminApi;
 
